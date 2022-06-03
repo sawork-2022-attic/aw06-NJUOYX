@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### resources ###
+meta_Books.json
+meta_Video_Games.json
