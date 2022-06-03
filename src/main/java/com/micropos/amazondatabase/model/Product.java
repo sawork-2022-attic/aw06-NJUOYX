@@ -36,6 +36,12 @@ public class Product implements Serializable {
         return product;
     }
 
+    public static Product fromCategory(String category){
+        Product product = new Product();
+        product.mainCat = category;
+        return product;
+    }
+
     public static Product parseRawProduct(RawProduct rawProduct){
         Optional<String> image_url_high_res = rawProduct.getImageURLHighRes().stream().findFirst();
         Optional<String> image_url = rawProduct.getImageURL().stream().findFirst();

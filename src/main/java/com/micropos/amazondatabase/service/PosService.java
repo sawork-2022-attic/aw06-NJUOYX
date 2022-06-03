@@ -15,5 +15,13 @@ public interface PosService {
 
     List<Product> products();
 
+    List<Product> products(String category);
+
+    Cart increase(Cart cart, String productId, int amount);
+
+    Cart remove(Cart cart, String productId);
+
+    List<String> getCategories();
+
     Product randomProduct();
 }

@@ -6,6 +6,7 @@ import com.micropos.amazondatabase.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +38,48 @@ public class PosServiceImpl implements PosService{
     @Override
     public List<Product> products() {
         return dataBaseService.getProducts();
+    }
+
+    @Override
+    public List<Product> products(String category){
+        if(category == null){
+            return dataBaseService.getProducts();
+        }else {
+            return dataBaseService.getProducts(category);
+        }
+    }
+
+    private Item getTarget(Cart cart, String productId){
+        for (Item item : cart.getItems()) {
+            if(item.getProduct().getAsin().equalsIgnoreCase(productId)){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Cart increase(Cart cart, String productId, int amount){
+        Item target = getTarget(cart, productId);
+        int q = target.getQuantity() + amount;
+        if(q > 0){
+            target.setQuantity(q);
+        }else{
+            cart.getItems().remove(target);
+        }
+        return cart;
+    }
+
+    @Override
+    public Cart remove(Cart cart, String productId){
+        Item target = getTarget(cart, productId);
+        cart.getItems().remove(target);
+        return cart;
+    }
+
+    @Override
+    public List<String> getCategories(){
+        return dataBaseService.getCategories();
     }
 
     @Override
